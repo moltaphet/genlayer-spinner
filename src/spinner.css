@@ -1,0 +1,53 @@
+/* GenLayer spinner
+   Colour comes from currentColor — set `color` on any ancestor.
+   Timings are CSS custom properties, so they can be overridden per instance. */
+
+.gls {
+  --gls-tide: 3.4s;   /* one full rise-and-drain */
+  --gls-drift: 2s;    /* horizontal wave travel  */
+  --gls-spin: 2.8s;   /* inner orbit             */
+  --gls-empty: 0.18;  /* opacity of the unfilled mark */
+  --gls-track: 0.3;   /* opacity of the orbit rings   */
+}
+
+.gls-ghost { fill: currentColor; opacity: var(--gls-empty); }
+.gls-fill  { fill: currentColor; }
+
+/* Rise, hold at full, drain. Start and end share both position and
+   velocity, so the loop has no visible seam. */
+.gls-level { animation: gls-tide var(--gls-tide) cubic-bezier(.45, 0, .55, 1) infinite; }
+@keyframes gls-tide {
+  0%       { transform: translateY(385px); }
+  46%, 54% { transform: translateY(18px); }
+  100%     { transform: translateY(385px); }
+}
+
+/* One full wavelength of travel = seamless. The wave path is 1400 units
+   wide so the mark stays covered at every point in the cycle. */
+.gls-wave { animation: gls-drift var(--gls-drift) linear infinite; }
+@keyframes gls-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-200px); }
+}
+
+.gls-orbit { transform-box: view-box; transform-origin: center; }
+.gls-orbit--in  { animation: gls-cw  var(--gls-spin) linear infinite; }
+.gls-orbit--out { animation: gls-ccw calc(var(--gls-spin) * 1.5) linear infinite; }
+@keyframes gls-cw  { to { transform: rotate(360deg); } }
+@keyframes gls-ccw { to { transform: rotate(-360deg); } }
+
+/* non-scaling-stroke keeps the ring a hairline on screen instead of
+   collapsing to a fraction of a pixel at small sizes. */
+.gls-track {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  opacity: var(--gls-track);
+  vector-effect: non-scaling-stroke;
+}
+.gls-dot { fill: currentColor; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gls { --gls-tide: 7s; --gls-spin: 9s; }
+  .gls-wave { animation: none; }
+}

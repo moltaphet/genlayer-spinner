@@ -1,0 +1,27 @@
+{
+  "name": "genlayer-spinner",
+  "version": "1.0.0",
+  "description": "A loading spinner built from the GenLayer mark. Pure SVG + CSS, no dependencies.",
+  "license": "MIT",
+  "author": "moltaphet",
+  "keywords": [
+    "genlayer",
+    "spinner",
+    "loader",
+    "svg",
+    "animation"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "src/GenLayerSpinner.jsx",
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  }
+}

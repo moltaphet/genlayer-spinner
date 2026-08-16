@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 16.75 372 372" role="img" aria-label="Loading">
+  <title>GenLayer spinner — Fill</title>
+  <style>
+    .gl-ghost { fill: currentColor; opacity: .18; }
+    .gl-fill  { fill: currentColor; }
+
+    /* rise, hold at full, drain. start and end share the same
+       position AND the same velocity, so the loop has no seam. */
+    .gl-level {
+      animation: gl-tide 3.4s cubic-bezier(.45, 0, .55, 1) infinite;
+    }
+    @keyframes gl-tide {
+      0%       { transform: translateY(385px); }
+      46%, 54% { transform: translateY(18px); }
+      100%     { transform: translateY(385px); }
+    }
+
+    /* one full wavelength of horizontal travel = seamless loop */
+    .gl-wave { animation: gl-drift 2s linear infinite; }
+    @keyframes gl-drift {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-200px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gl-level { animation-duration: 7s; }
+      .gl-wave  { animation: none; }
+    }
+  </style>
+
+  <defs>
+    <clipPath id="glClip">
+      <path d="M182.5 33L19 372.5L178.5 310L121 280L182.5 151.5Z"/>
+      <path d="M217.5 33L217.5 151.5L279 280L221.5 310L381 372.5Z"/>
+      <path d="M200 195L165.5 265.5L200 283L234.5 265.5Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- unfilled mark: keeps the silhouette readable at every size -->
+  <g class="gl-ghost">
+    <path d="M182.5 33L19 372.5L178.5 310L121 280L182.5 151.5Z"/>
+    <path d="M217.5 33L217.5 151.5L279 280L221.5 310L381 372.5Z"/>
+    <path d="M200 195L165.5 265.5L200 283L234.5 265.5Z"/>
+  </g>
+
+  <g clip-path="url(#glClip)">
+    <g class="gl-level">
+      <g class="gl-wave">
+        <path class="gl-fill" d="M-600 0q50 -18 100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0L800 640L-600 640Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 16.75 372 372" role="img" aria-label="Loading">
+  <title>GenLayer spinner — Layers</title>
+  <style>
+    .gl-part {
+      fill: currentColor;
+      animation: gl-layer 1.2s cubic-bezier(.4, 0, .2, 1) infinite;
+    }
+    .gl-l { animation-delay: 0s; }
+    .gl-r { animation-delay: .16s; }
+    .gl-c { animation-delay: .32s; }
+    @keyframes gl-layer {
+      0%, 60%, 100% { opacity: .18; }
+      25%           { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gl-part { animation-duration: 3s; }
+    }
+  </style>
+  <path class="gl-part gl-l" d="M182.5 33L19 372.5L178.5 310L121 280L182.5 151.5Z"/>
+  <path class="gl-part gl-r" d="M217.5 33L217.5 151.5L279 280L221.5 310L381 372.5Z"/>
+  <path class="gl-part gl-c" d="M200 195L165.5 265.5L200 283L234.5 265.5Z"/>
+</svg>

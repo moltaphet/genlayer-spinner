@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-27 9 454 454" role="img" aria-label="Loading">
+  <title>GenLayer spinner — Phase</title>
+  <style>
+    .gl-p {
+      fill: currentColor;
+      transform-box: view-box;
+      transform-origin: center;
+      animation: gl-phase 1.8s infinite;
+      animation-timing-function: linear(
+        0, .009, .035 2.1%, .141, .281 6.7%, .723 12.9%, .938 16.7%,
+        1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%,
+        1.129 32.8%, 1.051 39.6%, 1.017 43.1%, .991, .977 51%, .974 53.8%,
+        .98 57.1%, 1.018 69.2%, 1.006 81.2%, 1
+      );
+    }
+    /* the lag: each part starts a beat later, so they fan apart under
+       acceleration and lock back together as the spring settles */
+    .gl-r { animation-delay: -.045s; }
+    .gl-c { animation-delay: -.09s; }
+
+    @keyframes gl-phase {
+      0%      { transform: rotate(0deg); }
+      33.333% { transform: rotate(120deg); }
+      66.666% { transform: rotate(240deg); }
+      100%    { transform: rotate(360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gl-p { animation-duration: 5s; animation-timing-function: linear; animation-delay: 0s; }
+    }
+  </style>
+  <path class="gl-p gl-l" d="M182.5 33L19 372.5L178.5 310L121 280L182.5 151.5Z"/>
+  <path class="gl-p gl-r" d="M217.5 33L217.5 151.5L279 280L221.5 310L381 372.5Z"/>
+  <path class="gl-p gl-c" d="M200 195L165.5 265.5L200 283L234.5 265.5Z"/>
+</svg>

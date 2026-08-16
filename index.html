@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GenLayer Spinner — Fill + Orbits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fff;--peach:#fdefe2;--ink:#0e0e10;--orange:#e8913f;--gray:#86868f;--line:#e6e4e0;
+    --dur:3.4s;--spin:2.8s;--track:.3;--dotscale:1;--stroke:1.5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,var(--peach) 0,var(--paper) 300px);
+    color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:52px 24px 90px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin:0 0 16px}
+  h1{font-size:clamp(28px,4.8vw,48px);line-height:1.04;letter-spacing:-.03em;margin:0 0 14px}
+  .lede{max-width:56ch;color:#48484f;font-size:16px;line-height:1.6;margin:0}
+
+  .panel{margin:34px 0 6px;padding:20px 22px;border:1px solid var(--line);border-radius:14px;
+    background:rgba(255,255,255,.72);display:flex;flex-wrap:wrap;gap:24px;align-items:center}
+  .ctrl{display:flex;flex-direction:column;gap:7px;min-width:160px}
+  .ctrl label{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gray)}
+  .ctrl output{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink)}
+  input[type=range]{accent-color:var(--orange);width:100%}
+  button{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px 18px;cursor:pointer}
+  button[aria-pressed=true]{background:var(--orange)}
+  button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+  .stage{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;margin:34px 0 0}
+  .tile{border-radius:14px;border:1px solid var(--line);padding:20px;display:grid;place-items:center;gap:12px}
+  .tile.dark{background:var(--ink);border-color:var(--ink);color:#fff}
+  .tile.light{background:#fff;color:var(--ink)}
+  .tile small{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--gray)}
+  .mini{display:flex;gap:16px;align-items:flex-end}
+  .split{width:152px;height:152px;border-radius:14px;display:grid;place-items:center;overflow:hidden;
+    background:linear-gradient(115deg,#fff 0 50%,var(--ink) 50% 100%);border:1px solid var(--line)}
+  .split svg{width:96px;height:96px;mix-blend-mode:difference;color:#fff}
+
+  .note{margin-top:30px;font-family:"JetBrains Mono",monospace;font-size:11.5px;line-height:1.8;color:#5a5a63;max-width:72ch}
+  .note b{color:var(--ink);font-weight:500}
+
+  /* ---------- spinner ---------- */
+  .gl-ghost{fill:currentColor;opacity:.18}
+  .gl-fill{fill:currentColor}
+  .gl-level{animation:gl-tide var(--dur) cubic-bezier(.45,0,.55,1) infinite}
+  @keyframes gl-tide{0%{transform:translateY(385px)}46%,54%{transform:translateY(18px)}
+                     100%{transform:translateY(385px)}}
+  .gl-wave{animation:gl-drift 2s linear infinite}
+  @keyframes gl-drift{from{transform:translateX(0)}to{transform:translateX(-200px)}}
+
+  .gl-orbit{transform-box:view-box;transform-origin:center}
+  .gl-in{animation:gl-cw var(--spin) linear infinite}
+  .gl-out{animation:gl-ccw calc(var(--spin) * 1.5) linear infinite}
+  @keyframes gl-cw{to{transform:rotate(360deg)}}
+  @keyframes gl-ccw{to{transform:rotate(-360deg)}}
+  .gl-track{fill:none;stroke:currentColor;stroke-width:var(--stroke);opacity:var(--track);
+    vector-effect:non-scaling-stroke}
+  .gl-dot{fill:currentColor;transform-box:fill-box;transform-origin:center;transform:scale(var(--dotscale))}
+
+  body.paused *{animation-play-state:paused!important}
+  @media(prefers-reduced-motion:reduce){svg *{animation-duration:8s!important}.gl-wave{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Portal mission · direction 07</p>
+  <h1>Fill, with two orbits.</h1>
+  <p class="lede">Two hairline rings sit behind the mark, each carrying a single dot on its own line, turning in opposite directions at different speeds. Because they pass behind the blades, the dots disappear and reappear — the orbit reads as depth rather than decoration.</p>
+
+  <div class="panel">
+    <div class="ctrl"><label for="spin">Orbit speed <output id="spinOut">2.80s</output></label>
+      <input id="spin" type="range" min="1.2" max="6" step="0.1" value="2.8"></div>
+    <div class="ctrl"><label for="dur">Fill cycle <output id="durOut">3.40s</output></label>
+      <input id="dur" type="range" min="1.5" max="6" step="0.1" value="3.4"></div>
+    <div class="ctrl"><label for="track">Ring opacity <output id="trackOut">30%</output></label>
+      <input id="track" type="range" min="0" max="70" step="1" value="30"></div>
+    <div class="ctrl"><label for="stroke">Ring weight <output id="strokeOut">1.5px</output></label>
+      <input id="stroke" type="range" min="0.5" max="4" step="0.25" value="1.5"></div>
+    <div class="ctrl"><label for="dot">Dot size <output id="dotOut">100%</output></label>
+      <input id="dot" type="range" min="40" max="200" step="5" value="100"></div>
+    <button id="toggle" aria-pressed="false">Pause</button>
+  </div>
+
+  <div class="stage" id="stage"></div>
+
+  <p class="note">
+    <b>Counter-rotation is the whole trick.</b> Same direction reads as one thick ring;
+    opposite directions at a 1&#8239;:&#8239;1.5 ratio never repeat the same arrangement,
+    so the eye keeps finding it new.<br><br>
+    <b>The rings use non-scaling-stroke.</b> Without it a 1.5-unit stroke in a 460-unit
+    viewBox becomes 0.08&#8239;px at 24&#8239;px and vanishes. With it the ring stays a
+    hairline on screen at every size.<br><br>
+    <b>Honest limit.</b> At 24&#8239;px the dots are under a pixel and the rings are
+    decoration you can barely see. It still reads, but if the Portal uses 24&#8239;px
+    spinners, ship the core-only file there and this one for 40&#8239;px and up.
+    Two files, one identity — a normal thing for an icon system to do.
+  </p>
+</div>
+
+<script>
+const P=["M182.5 33L19 372.5L178.5 310L121 280L182.5 151.5Z",
+         "M217.5 33L217.5 151.5L279 280L221.5 310L381 372.5Z",
+         "M200 195L165.5 265.5L200 283L234.5 265.5Z"];
+let uid=0;
+function glyph(px){
+  const id="c"+(uid++), paths=P.map(d=>`<path d="${d}"/>`).join("");
+  const s=px?`width="${px}" height="${px}"`:"";
+  return `<svg ${s} viewBox="-30 6 460 460" aria-hidden="true">
+    <defs><clipPath id="${id}">${paths}</clipPath></defs>
+    <g class="gl-orbit gl-out">
+      <circle class="gl-track" cx="200" cy="236" r="216"/>
+      <circle class="gl-dot" cx="-16" cy="236" r="8"/>
+    </g>
+    <g class="gl-orbit gl-in">
+      <circle class="gl-track" cx="200" cy="236" r="196"/>
+      <circle class="gl-dot" cx="396" cy="236" r="10"/>
+    </g>
+    <g class="gl-ghost">${paths}</g>
+    <g clip-path="url(#${id})"><g class="gl-level"><g class="gl-wave">
+      <path class="gl-fill" d="M-600 0q50 -18 100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0L800 640L-600 640Z"/>
+    </g></g></g>
+  </svg>`;
+}
+
+document.getElementById("stage").innerHTML=`
+  <div class="split">${glyph(null)}</div>
+  <div class="tile light"><div style="width:112px;height:112px">${glyph(null)}</div><small>96px · light</small></div>
+  <div class="tile dark"><div class="mini">
+    <div style="width:64px;height:64px">${glyph(null)}</div>
+    <div style="width:48px;height:48px">${glyph(null)}</div>
+    <div style="width:32px;height:32px">${glyph(null)}</div>
+    <div style="width:24px;height:24px">${glyph(null)}</div>
+  </div><small>64 / 48 / 32 / 24px · dark</small></div>`;
+
+const r=document.documentElement,$=i=>document.getElementById(i);
+$("spin").oninput=e=>{r.style.setProperty("--spin",e.target.value+"s");spinOut.value=(+e.target.value).toFixed(2)+"s"};
+$("dur").oninput=e=>{r.style.setProperty("--dur",e.target.value+"s");durOut.value=(+e.target.value).toFixed(2)+"s"};
+$("track").oninput=e=>{r.style.setProperty("--track",e.target.value/100);trackOut.value=e.target.value+"%"};
+$("stroke").oninput=e=>{r.style.setProperty("--stroke",e.target.value);strokeOut.value=e.target.value+"px"};
+$("dot").oninput=e=>{r.style.setProperty("--dotscale",e.target.value/100);dotOut.value=e.target.value+"%"};
+$("toggle").onclick=()=>{const p=document.body.classList.toggle("paused");
+  $("toggle").textContent=p?"Resume":"Pause";$("toggle").setAttribute("aria-pressed",String(p))};
+</script>
+</body>
+</html>

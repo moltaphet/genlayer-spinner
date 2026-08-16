@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-27 9 454 454" role="img" aria-label="Loading">
+  <title>GenLayer spinner — Pivot</title>
+  <style>
+    .gl-mark {
+      fill: currentColor;
+      transform-box: view-box;
+      transform-origin: center;
+      animation: gl-pivot 1.8s cubic-bezier(.34, 1.4, .5, 1) infinite;
+      animation-timing-function: linear(
+        0, .009, .035 2.1%, .141, .281 6.7%, .723 12.9%, .938 16.7%,
+        1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%,
+        1.129 32.8%, 1.051 39.6%, 1.017 43.1%, .991, .977 51%, .974 53.8%,
+        .98 57.1%, 1.018 69.2%, 1.006 81.2%, 1
+      );
+    }
+    @keyframes gl-pivot {
+      0%             { transform: rotate(0deg); }
+      33.333%        { transform: rotate(120deg); }
+      66.666%        { transform: rotate(240deg); }
+      100%           { transform: rotate(360deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gl-mark { animation-duration: 5s; animation-timing-function: linear; }
+    }
+  </style>
+  <g class="gl-mark">
+    <path d="M182.5 33L19 372.5L178.5 310L121 280L182.5 151.5Z"/>
+    <path d="M217.5 33L217.5 151.5L279 280L221.5 310L381 372.5Z"/>
+    <path d="M200 195L165.5 265.5L200 283L234.5 265.5Z"/>
+  </g>
+</svg>

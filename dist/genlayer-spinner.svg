@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-30 6 460 460" role="img" aria-label="Loading">
+  <title>GenLayer spinner — Fill + Orbits</title>
+  <style>
+    .gl-ghost { fill: currentColor; opacity: .18; }
+    .gl-fill  { fill: currentColor; }
+
+    /* ---- liquid core ---- */
+    .gl-level {
+      animation: gl-tide 3.4s cubic-bezier(.45, 0, .55, 1) infinite;
+    }
+    @keyframes gl-tide {
+      0%        { transform: translateY(385px); }
+      46%, 54%  { transform: translateY(18px); }
+      100%      { transform: translateY(385px); }
+    }
+
+    .gl-wave { animation: gl-drift 2s linear infinite; }
+    @keyframes gl-drift { from { transform: translateX(0); } to { transform: translateX(-200px); } }
+
+    /* ---- orbits ---- */
+    .gl-orbit {
+      transform-box: view-box;
+      transform-origin: center;
+    }
+    .gl-in  { animation: gl-cw  2.8s linear infinite; }
+    .gl-out { animation: gl-ccw 4.2s linear infinite; }
+    @keyframes gl-cw  { to { transform: rotate(360deg); } }
+    @keyframes gl-ccw { to { transform: rotate(-360deg); } }
+
+    .gl-track { fill: none; stroke: currentColor; stroke-width: 1.5; opacity: .3;
+                vector-effect: non-scaling-stroke; }
+    .gl-dot   { fill: currentColor; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gl-level { animation-duration: 6s; }
+      .gl-wave  { animation: none; }
+      .gl-in    { animation-duration: 9s; }
+      .gl-out   { animation-duration: 13s; }
+    }
+  </style>
+
+  <defs>
+    <clipPath id="glClip">
+      <path d="M182.5 33L19 372.5L178.5 310L121 280L182.5 151.5Z"/>
+      <path d="M217.5 33L217.5 151.5L279 280L221.5 310L381 372.5Z"/>
+      <path d="M200 195L165.5 265.5L200 283L234.5 265.5Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- outer orbit, counter-clockwise -->
+  <g class="gl-orbit gl-out">
+    <circle class="gl-track" cx="200" cy="236" r="216"/>
+    <circle class="gl-dot" cx="-16" cy="236" r="8"/>
+  </g>
+
+  <!-- inner orbit, clockwise -->
+  <g class="gl-orbit gl-in">
+    <circle class="gl-track" cx="200" cy="236" r="196"/>
+    <circle class="gl-dot" cx="396" cy="236" r="10"/>
+  </g>
+
+  <!-- the mark -->
+  <g class="gl-ghost">
+    <path d="M182.5 33L19 372.5L178.5 310L121 280L182.5 151.5Z"/>
+    <path d="M217.5 33L217.5 151.5L279 280L221.5 310L381 372.5Z"/>
+    <path d="M200 195L165.5 265.5L200 283L234.5 265.5Z"/>
+  </g>
+  <g clip-path="url(#glClip)">
+    <g class="gl-level">
+      <g class="gl-wave">
+        <path class="gl-fill" d="M-600 0q50 -18 100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0t100 0L800 640L-600 640Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
